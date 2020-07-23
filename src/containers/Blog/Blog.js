@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 // NavLink - do plan on styling the active post
 // Switch tells React Router only load one of the routers
 // the 1st router that matches a given path will be loaded & thereafter, it'll be just stop analyzing the routes, it won't render any route.
-import {Route, NavLink, Switch} from 'react-router-dom';
+import {Route, NavLink, Switch, Redirect} from 'react-router-dom';
 import './Blog.css';
 import Posts from './Posts/Posts';
 import NewPost from './NewPost/NewPost';
-import FullPost from './FullPost/FullPost';
 
 class Blog extends Component {
     render () {
@@ -20,7 +19,7 @@ class Blog extends Component {
                                 Notes: when loading the same page again, it's still react rendering the JScode to the DOM
                                 and therefore lose our state*/}
                             <li><NavLink 
-                                    to='/'
+                                    to='/posts/'
                                     exact
                                     activeClassName='my-active'
                                     activeStyle={{
@@ -35,12 +34,11 @@ class Blog extends Component {
                         </ul>
                     </nav>
                 </header>
+                {/* component property need to be a reference to the func or class we want to use*/}
                 <Switch>
-                    {/* component property need to be a reference to the func or class we want to use*/}
-                    <Route path='/' exact component={Posts} />
                     <Route path='/new-post' component={NewPost} />
-                    {/*":" will be replaced dyanmically*/}
-                    <Route path='/:id' exact component={FullPost}/>
+                    <Route path='/posts' component={Posts} />
+                    <Redirect from='/' to='/posts' />
                 </Switch>
             </div>
         );
